@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 model = OpenAI()
+# This will limit the time in which requests are made to the API, if the request takes longer than 30 seconds, it will raise a TimeoutError
 model.timeout = 30
 
 # Read the image file and convert it to base64 which chatgpt can understand
@@ -50,7 +51,10 @@ def visionExtract(b64_image, prompt):
               "content": [
                   {
                       "type": "image_url",
-                      "image_url": f"data:image/jpeg;base64,{b64_image}",
+                      "image_url": {
+                        "url": f"data:image/jpeg;base64,{b64_image}",
+                        "detail": "low"
+                        } 
                   },
                   {
                       "type": "text",
@@ -59,7 +63,7 @@ def visionExtract(b64_image, prompt):
               ]
           }
       ],
-      max_tokens=1024,
+      max_tokens=1200,
   )
 
   message = response.choices[0].message
@@ -82,5 +86,5 @@ def visionCrawl(url, prompt):
   else:
     return visionExtract(b64_image, prompt)
 
-response = visionCrawl("https://www.formula1.com/en/results.html/2023/drivers.html", "Give me the driver lineup for the 2023 F1 season in json format.")
+response = visionCrawl("https://www.formula1.com/en/results.html/2023/drivers.html", "Give me the driver standings for the 2023 F1 season in json format.")
 print(response)
