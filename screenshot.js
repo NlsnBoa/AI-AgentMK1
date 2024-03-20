@@ -4,6 +4,7 @@ puppeteer.use(StealthPlugin());
 
 // const url = process.argv[2];
 const url = "https://www.formula1.com/en/results.html/2023/drivers.html"
+// const url = "https://www.linkedin.com/in/nelson-herrera-swe/"
 const timeout = 10000;
 
 (async () => {
@@ -11,10 +12,11 @@ const timeout = 10000;
     {
         console.log("Launching browser")
         const browser = await puppeteer.launch( {
-        headless: false,
-        executablePath: '/Applications/Google Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary',
-        userDataDir: '/Users/danyherrera/Library/Application\ Support/Google/Chrome\ Canary/Default', 
-        dumpio: true,
+            headless: true,
+            executablePath: '/Applications/Google Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary',
+            userDataDir: '/Users/danyherrera/Library/Application\ Support/Google/Chrome\ Canary/Default', 
+            ignoreDefaultArgs: ["--enable-automation"],
+            dumpio: true,
         } );
 
         const page = await browser.newPage();

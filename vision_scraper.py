@@ -8,7 +8,7 @@ load_dotenv()
 
 model = OpenAI()
 # This will limit the time in which requests are made to the API, if the request takes longer than 30 seconds, it will raise a TimeoutError
-model.timeout = 30
+model.timeout = 50
 
 # Read the image file and convert it to base64 which chatgpt can understand
 def image_b64(image):
@@ -53,7 +53,7 @@ def visionExtract(b64_image, prompt):
                       "type": "image_url",
                       "image_url": {
                         "url": f"data:image/jpeg;base64,{b64_image}",
-                        "detail": "low"
+                        "detail": "high"
                         } 
                   },
                   {
